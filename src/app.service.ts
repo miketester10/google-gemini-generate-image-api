@@ -15,15 +15,15 @@ import {
 
 @Injectable()
 export class AppService implements OnModuleInit {
+  private readonly logger = new Logger(AppService.name);
   private readonly api_key = <string>(
     this.configService.get('GOOGLE_AI_API_KEY')
   );
   private readonly google_models_api = <string>(
     this.configService.get('GOOGLE_AI_MODELS_API')
   );
+  private readonly model = <string>this.configService.get('MODEL');
   private ai: GoogleGenAI;
-  private model = 'gemini-2.0-flash-exp-image-generation';
-  private readonly logger = new Logger(AppService.name);
 
   constructor(
     private readonly configService: ConfigService,
