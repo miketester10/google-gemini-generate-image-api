@@ -55,7 +55,7 @@ export class AppService implements OnModuleInit {
     );
   }
 
-  async genereteImage(prompt: string): Promise<Buffer> {
+  async generateImage(prompt: string): Promise<Buffer> {
     const response: GenerateContentResponse =
       await this.ai.models.generateContent({
         model: this.model,
