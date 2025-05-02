@@ -1,4 +1,9 @@
-import { GenerateContentResponse, GoogleGenAI, Modality } from '@google/genai';
+import {
+  GenerateContentResponse,
+  GoogleGenAI,
+  MediaResolution,
+  Modality,
+} from '@google/genai';
 import { HttpService } from '@nestjs/axios';
 import {
   BadRequestException,
@@ -57,6 +62,7 @@ export class AppService implements OnModuleInit {
         contents: prompt,
         config: {
           responseModalities: [Modality.TEXT, Modality.IMAGE],
+          // mediaResolution: MediaResolution.MEDIA_RESOLUTION_HIGH,
         },
       });
 

@@ -26,7 +26,7 @@ export class AppController {
       'Content-Length': buffer.length,
     });
 
-    stream.pipe(res);
+    stream.pipe<Response>(res);
   }
 
   @Get('models')
