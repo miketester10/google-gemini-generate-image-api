@@ -16,7 +16,7 @@ export class AppController {
     @Res() res: Response,
   ): Promise<void> {
     const { prompt } = basePromptDto;
-    const buffer = await this.appService.genereteImage(prompt);
+    const buffer = await this.appService.generateImage(prompt);
 
     const stream = Readable.from(buffer);
 
