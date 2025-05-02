@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  # Servizio per l'app NestJS
+  nestjs-app:
+    build: .
+    container_name: gemini-generate-image
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
