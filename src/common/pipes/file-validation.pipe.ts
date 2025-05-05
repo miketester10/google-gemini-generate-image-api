@@ -1,11 +1,16 @@
 import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
-import { Express } from 'express';
+import * as FileType from 'file-type';
 
 @Injectable()
 export class FileValidationPipe implements PipeTransform {
-  transform(file: Express.Multer.File): Express.Multer.File {
+  async transform(file: Express.Multer.File): Promise<Express.Multer.File> {
     if (!file) {
       throw new BadRequestException('No file provided.');
+    }
+
+    const fileType = await FileType.fromBuffer(file.buffer);
+    if (!fileType || !fileType.mime.startsWith('image/')) {
+      throw new BadRequestException('Only image files are allowed.');
     }
 
     // const maxSize = 19 * 1024 * 1024;
