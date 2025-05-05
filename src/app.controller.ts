@@ -24,19 +24,13 @@ export class AppController {
   async generateImage(
     @Body() basePromptDto: BasePromptDto,
     @Res() res: Response,
-  ): Promise<void> {
+  ) {
     const { prompt } = basePromptDto;
     const buffer = await this.appService.generateImage(prompt);
 
-    const stream = Readable.from(buffer);
+    this.setHeaders(res, buffer);
 
-    res.set({
-      'Content-Type': 'image/png',
-      'Content-Disposition': 'inline; filename="image.png"',
-      'Content-Length': buffer.length,
-    });
-
-    stream.pipe<Response>(res);
+    return this.createStream(res, buffer);
   }
 
   @UseInterceptors(FileInterceptor('file'))
@@ -48,20 +42,28 @@ export class AppController {
   ) {
     const { prompt } = basePromptDto;
     const buffer = await this.appService.editImage(prompt, file);
-    const stream = Readable.from(buffer);
 
-    res.set({
-      'Content-Type': 'image/png',
-      'Content-Disposition': 'inline; filename="image.png"',
-      'Content-Length': buffer.length,
-    });
+    this.setHeaders(res, buffer);
 
-    stream.pipe<Response>(res);
+    return this.createStream(res, buffer);
   }
 
   @Get('models')
   getGoogleAiMmodels(): Observable<Model[]> {
     const models = this.appService.getGoogleAiModels();
     return models;
+  }
+
+  private setHeaders(res: Response, buffer: Buffer): void {
+    res.set({
+      'Content-Type': 'image/png',
+      'Content-Disposition': 'inline; filename="image.png"',
+      'Content-Length': buffer.length,
+    });
+  }
+
+  private createStream(res: Response, buffer: Buffer) {
+    const stream = Readable.from(buffer);
+    return stream.pipe<Response>(res);
   }
 }
