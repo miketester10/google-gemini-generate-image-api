@@ -100,9 +100,13 @@ export class AppService implements OnModuleInit {
 
     // Prepare the content parts
     if (file.size > MAX_SIZE) {
-      this.logger.debug(`Uploading file to Google AI`);
+      this.logger.debug(
+        `Uploading file to Google AI beacause the size of the image is greater than 20MB`,
+      );
       const myfile = await this.ai.files.upload({
-        file: new Blob([file.buffer], { type: file.mimetype }),
+        file: new Blob([file.buffer as BufferSource], {
+          type: file.mimetype,
+        }),
         config: { mimeType: file.mimetype },
       });
       contents = createUserContent([

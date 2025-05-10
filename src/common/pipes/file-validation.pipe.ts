@@ -15,11 +15,13 @@ export class FileValidationPipe implements PipeTransform {
 
   async transform(file: Express.Multer.File): Promise<Express.Multer.File> {
     if (!file) {
+      this.logger.verbose(`No file was uploaded.`);
       throw new BadRequestException('No file was uploaded.');
     }
 
-    // Verifico se il MIME type inizia con 'image/'
-    const fileType = await FileType.fromBuffer(file.buffer); // Stabilisce il mimetype controllando il magic number del buffer. Più sicuro.
+    // Stabilisce il mimetype controllando il magic number del buffer. Più sicuro.
+    const fileType = await FileType.fromBuffer(file.buffer);
+    // Verifico se il MIME type è definito ed inizia con 'image/' (poichè se viene inviato per esempio un file .txt, il metodo FileType.fromBuffer(file.buffer) non riesce a stabilire il MIME type e riorna undefined)
     if (!fileType || !fileType.mime.startsWith('image/')) {
       this.logger.verbose(
         `File with mimetype ${fileType?.mime} is not an image.`,
@@ -34,6 +36,7 @@ export class FileValidationPipe implements PipeTransform {
       this.logger.verbose(
         `File with mimetype ${fileType.mime} is already PNG, JPEG or WebP.`,
       );
+      file.mimetype = fileType.mime;
       return file;
     }
 
