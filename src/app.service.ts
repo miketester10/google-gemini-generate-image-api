@@ -111,7 +111,7 @@ export class AppService implements OnModuleInit {
     // Prepare the content parts
     if (file.size > MAX_SIZE) {
       this.logger.debug(
-        `Uploading file to Google AI beacause the size of the image is greater than 20MB`,
+        `Uploading file to Google AI beacause the size of the image is greater than 20MB. Size: ${(file.size / (1024 * 1024)).toFixed(2)} MB`,
       );
       try {
         fileUploaded = await this.ai.files.upload({

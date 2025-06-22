@@ -11,7 +11,6 @@ import * as FileType from 'file-type';
 @Injectable()
 export class FileValidationPipe implements PipeTransform {
   private readonly logger = new Logger(FileValidationPipe.name);
-  private readonly allowedMimeTypes = ['image/png', 'image/jpeg', 'image/webp']; // Gemini attualmente supporta solo questi mimetype
 
   async transform(file: Express.Multer.File): Promise<Express.Multer.File> {
     if (!file) {
@@ -26,39 +25,44 @@ export class FileValidationPipe implements PipeTransform {
       this.logger.verbose(
         `File with mimetype ${fileType?.mime} is not an image.`,
       );
-      throw new BadRequestException(
-        'The uploaded file must be an image. Please ensure the image has a .png, .jpeg, or .webp extension.',
-      );
+      throw new BadRequestException('The uploaded file must be an image.');
     }
 
-    // Se il formato è già PNG, JPEG o WebP, ritorno direttamente il file
-    if (this.allowedMimeTypes.includes(fileType.mime)) {
-      this.logger.verbose(
-        `File with mimetype ${fileType.mime} is already PNG, JPEG or WebP.`,
-      );
-      file.mimetype = fileType.mime;
-      return file;
-    }
+    // Verifico se il MIME type del file caricato corrisponde al MIME type del file dopo aver controllato il magic number.
+    // Se corrisponde ed è un JPEG, ritorno il file. Altrimenti, converto l'immagine in JPEG e ritorno il file.
+    // if (file.mimetype === fileType.mime && fileType.mime === 'image/jpeg') {
+    //   return file;
+    // } else {
+    //   this.logger.verbose(
+    //     `Mismatch mimetype between file uploaded: ${file.mimetype} and file after checking magic number: ${fileType.mime}.`,
+    //   );
+    // }
 
-    // Converto l'immagine in PNG usando sharp
+    // Converto l'immagine in JPEG usando sharp
+    // (anche se è già in JPEG la converto lo stesso, poichè con alcuni file JPEG senza conversione Google AI da errore)
     try {
       this.logger.verbose(
-        `Converting file with mimetype ${fileType.mime} to PNG.`,
+        `Converting file with mimetype ${fileType.mime} to JPEG.`,
       );
 
-      const convertedImage = await sharp(file.buffer)
-        .png({ compressionLevel: 9 })
-        .toBuffer();
+      const convertedImage = await sharp(file.buffer).jpeg().toBuffer();
+
+      this.logger.verbose(
+        `Converted image size: ${(convertedImage.length / (1024 * 1024)).toFixed(2)} MB`,
+      );
 
       // Aggiorno i metadati del file
       file.buffer = convertedImage;
-      file.mimetype = 'image/png';
-      file.originalname = path.parse(file.originalname).name + '.png';
+      file.size = convertedImage.length;
+      file.mimetype = 'image/jpeg';
+      file.originalname = path.parse(file.originalname).name + '.jpeg';
       return file;
     } catch (error) {
-      if (error instanceof Error) this.logger.error(error.message);
+      this.logger.error(
+        `An error occurred while converting the uploaded image: ${(error as Error).message}`,
+      );
       throw new BadRequestException(
-        'An error occurred while converting the uploaded image. Please ensure the image has a .png, .jpeg, or .webp extension.',
+        'An error occurred while converting the uploaded image.',
       );
     }
   }
