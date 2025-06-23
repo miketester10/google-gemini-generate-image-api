@@ -37,6 +37,8 @@ export class FileValidationPipe implements PipeTransform {
         `File with mimetype ${fileType.mime} is already PNG, JPEG or WebP.`,
       );
       file.mimetype = fileType.mime;
+      file.originalname =
+        path.parse(file.originalname).name + '.' + fileType.ext;
       return file;
     }
 
