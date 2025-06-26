@@ -54,6 +54,7 @@ export class FileValidationPipe implements PipeTransform {
 
       // Aggiorno i metadati del file
       file.buffer = convertedImage;
+      file.size = convertedImage.length;
       file.mimetype = 'image/png';
       file.originalname = path.parse(file.originalname).name + '.png';
       return file;
