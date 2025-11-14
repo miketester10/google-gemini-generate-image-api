@@ -49,7 +49,7 @@ export class AppController {
   }
 
   @Get('models')
-  getGoogleAiMmodels(): Observable<Model[]> {
+  getGoogleAiModels(): Observable<Model[]> {
     const models = this.appService.getGoogleAiModels();
     return models;
   }
