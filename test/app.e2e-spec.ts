@@ -96,7 +96,7 @@ describe('Google Gemini API Test (e2e)', () => {
         .send({ prompt })
         .expect((res) => {
           // Accetta 200 se l'API funziona, 500 se l'API Google non è disponibile/configurata
-          if (res.status === 200) {
+          if (res.status === 201) {
             expect(res.headers['content-type']).toContain('image/png');
             expect(res.headers['content-disposition']).toContain(
               'inline; filename="image.png"',
@@ -175,7 +175,7 @@ describe('Google Gemini API Test (e2e)', () => {
         .attach('file', testImage, 'test-image.png')
         .expect((res) => {
           // Accetta 200 se l'API funziona, 500 se l'API Google non è disponibile/configurata
-          if (res.status === 200) {
+          if (res.status === 201) {
             expect(res.headers['content-type']).toContain('image/png');
             expect(res.headers['content-disposition']).toContain(
               'inline; filename="image.png"',
@@ -273,7 +273,7 @@ describe('Google Gemini API Test (e2e)', () => {
         .field('prompt', prompt)
         .attach('file', jpegBuffer, 'test-image.jpg')
         .expect((res) => {
-          if (res.status === 200) {
+          if (res.status === 201) {
             expect(res.headers['content-type']).toContain('image/png');
             expect(res.headers['content-disposition']).toContain(
               'inline; filename="image.png"',
@@ -318,7 +318,7 @@ describe('Google Gemini API Test (e2e)', () => {
         .field('prompt', prompt)
         .attach('file', webpBuffer, 'test-image.webp')
         .expect((res) => {
-          if (res.status === 200) {
+          if (res.status === 201) {
             expect(res.headers['content-type']).toContain('image/png');
             expect(res.headers['content-disposition']).toContain(
               'inline; filename="image.png"',
