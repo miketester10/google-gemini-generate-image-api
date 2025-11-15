@@ -108,7 +108,7 @@ describe('Google Gemini API Test (e2e)', () => {
           } else if (res.status === 500) {
             // Se l'API Google non è disponibile, verifica che l'errore sia gestito correttamente
             expect(res.body).toBeDefined();
-            expect(res.body.message || res.body.error).toBeDefined();
+            expect(res.body.message).toBe('Error while generating image.');
           } else {
             throw new Error(`Unexpected status code: ${res.status}`);
           }
@@ -187,7 +187,7 @@ describe('Google Gemini API Test (e2e)', () => {
           } else if (res.status === 500) {
             // Se l'API Google non è disponibile, verifica che l'errore sia gestito correttamente
             expect(res.body).toBeDefined();
-            expect(res.body.message || res.body.error).toBeDefined();
+            expect(res.body.message).toBe('Error while generating image.');
           } else {
             throw new Error(`Unexpected status code: ${res.status}`);
           }
@@ -283,7 +283,7 @@ describe('Google Gemini API Test (e2e)', () => {
             expect(res.body.length).toBeGreaterThan(0);
           } else if (res.status === 500) {
             expect(res.body).toBeDefined();
-            expect(res.body.message || res.body.error).toBeDefined();
+            expect(res.body.message).toBe('Error while generating image.');
           } else if (res.status === 400) {
             expect(res.body.message).toBeDefined();
           } else {
@@ -328,7 +328,7 @@ describe('Google Gemini API Test (e2e)', () => {
             expect(res.body.length).toBeGreaterThan(0);
           } else if (res.status === 500) {
             expect(res.body).toBeDefined();
-            expect(res.body.message || res.body.error).toBeDefined();
+            expect(res.body.message).toBe('Error while generating image.');
           } else if (res.status === 400) {
             expect(res.body.message).toBeDefined();
           } else {
