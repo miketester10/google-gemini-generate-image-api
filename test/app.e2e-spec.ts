@@ -95,7 +95,7 @@ describe('Google Gemini API Test (e2e)', () => {
         .post('/generate-image')
         .send({ prompt })
         .expect((res) => {
-          // Accetta 200 se l'API funziona, 500 se l'API Google non è disponibile/configurata
+          // Accetta 201 se l'API funziona, 500 se l'API Google non è disponibile/configurata
           if (res.status === 201) {
             expect(res.headers['content-type']).toContain('image/png');
             expect(res.headers['content-disposition']).toContain(
@@ -174,7 +174,7 @@ describe('Google Gemini API Test (e2e)', () => {
         .field('prompt', prompt)
         .attach('file', testImage, 'test-image.png')
         .expect((res) => {
-          // Accetta 200 se l'API funziona, 500 se l'API Google non è disponibile/configurata
+          // Accetta 201 se l'API funziona, 500 se l'API Google non è disponibile/configurata
           if (res.status === 201) {
             expect(res.headers['content-type']).toContain('image/png');
             expect(res.headers['content-disposition']).toContain(
