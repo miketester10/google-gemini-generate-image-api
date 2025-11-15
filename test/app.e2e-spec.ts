@@ -264,7 +264,7 @@ describe('Google Gemini API Test (e2e)', () => {
         });
     });
 
-    it('Dovrebbe accettare un file JPEG valido con risposta 200', async () => {
+    it('Dovrebbe accettare un file JPEG valido con risposta 201', async () => {
       const prompt = 'Make it brighter';
       const jpegBuffer = createTestImageJpegBuffer();
 
@@ -309,7 +309,7 @@ describe('Google Gemini API Test (e2e)', () => {
         });
     });
 
-    it('Dovrebbe accettare un file WebP valido con risposta 200', async () => {
+    it('Dovrebbe accettare un file WebP valido con risposta 201', async () => {
       const prompt = 'Make it brighter';
       const webpBuffer = createTestImageWebpBuffer();
 
