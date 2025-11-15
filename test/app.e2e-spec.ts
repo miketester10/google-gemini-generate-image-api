@@ -33,21 +33,21 @@ describe('Google Gemini API Test (e2e)', () => {
   });
 
   // Helper functions per creare buffer di immagini di test
-  // PNG minimale 1x1 pixel rosso
+  // Immagine PNG minimale valida (1x1 pixel)
   const createTestImagePngBuffer = (): Buffer => {
     return Buffer.from(
       'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
       'base64',
     );
   };
-  // JPEG minimale valido (immagine 1x1 pixel)
+  // Immagine JPEG minimale valida (1x1 pixel)
   const createTestImageJpegBuffer = (): Buffer => {
     return Buffer.from(
       '/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwA/8A',
       'base64',
     );
   };
-  // WebP minimale valido
+  // Immagine WebP minimale valida (1x1 pixel)
   const createTestImageWebpBuffer = (): Buffer => {
     return Buffer.from(
       'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',
