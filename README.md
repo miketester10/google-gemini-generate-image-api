@@ -201,7 +201,7 @@ google-gemini-generate-image-api/
 | `GOOGLE_AI_API_KEY`    | Chiave API di Google AI                        | Sì           |
 | `GOOGLE_AI_MODELS_API` | URL base per l'API dei modelli                 | Sì           |
 | `MODEL`                | Nome del modello Gemini da utilizzare          | Sì           |
-|
+
 
 ## 🧪 Testing
 
