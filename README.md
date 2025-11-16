@@ -111,7 +111,7 @@ npm install
 ```env
 GOOGLE_AI_API_KEY=your_api_key_here
 GOOGLE_AI_MODELS_API=https://generativelanguage.googleapis.com/v1beta/models?key=
-MODEL=gemini-2.0-flash-exp-image-generation
+MODEL=gemini-2.5-flash-image
 ```
 
 4. **Avvia l'applicazione in modalità sviluppo:**
