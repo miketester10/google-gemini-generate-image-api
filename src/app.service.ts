@@ -25,10 +25,8 @@ import {
 @Injectable()
 export class AppService implements OnModuleInit {
   private readonly logger = new Logger(AppService.name);
-  private readonly api_key = <string>(
-    this.configService.get('GOOGLE_AI_API_KEY')
-  );
-  private readonly google_models_api = <string>(
+  private readonly apiKey = <string>this.configService.get('GOOGLE_AI_API_KEY');
+  private readonly googleModelsApi = <string>(
     this.configService.get('GOOGLE_AI_MODELS_API')
   );
   private readonly model = <string>this.configService.get('MODEL');
@@ -41,17 +39,17 @@ export class AppService implements OnModuleInit {
 
   onModuleInit() {
     this.ai = new GoogleGenAI({
-      apiKey: this.api_key,
+      apiKey: this.apiKey,
     });
   }
 
   getGoogleAiModels(): Observable<Model[]> {
-    const API = this.google_models_api + this.api_key;
+    const API = this.googleModelsApi + this.apiKey;
 
     return this.httpService.get<GoogleAiModelResponse>(API).pipe(
       map((response) => response.data.models),
       catchError((error) => {
-        this.logger.error(`Error fetching models: ${error}`);
+        this.logger.error(`Error fetching models: ${(error as Error).message}`);
         return throwError(
           () => new BadRequestException('Error fetching models'),
         );
