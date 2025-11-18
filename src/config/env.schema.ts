@@ -19,7 +19,10 @@ type envType = z.infer<typeof envSchema>;
 const envParsed = envSchema.safeParse(process.env);
 
 if (!envParsed.success) {
-  console.error('❌ Config validation error:', envParsed.error);
+  console.error(
+    '❌ Config validation error:',
+    z.treeifyError(envParsed.error).properties,
+  );
   throw new Error('Invalid environment variables');
 }
 
