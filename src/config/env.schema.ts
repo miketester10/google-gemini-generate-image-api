@@ -3,11 +3,15 @@ import { config } from 'dotenv';
 config();
 
 const envSchema = z.object({
-  GOOGLE_AI_API_KEY: z.string().nonempty('GOOGLE_AI_API_KEY is required.'),
+  GOOGLE_AI_API_KEY: z
+    .string()
+    .trim()
+    .nonempty('GOOGLE_AI_API_KEY is required.'),
   GOOGLE_AI_MODELS_API: z
     .string()
+    .trim()
     .nonempty('GOOGLE_AI_MODELS_API is required.'),
-  MODEL: z.string().nonempty('MODEL is required.'),
+  MODEL: z.string().trim().nonempty('MODEL is required.'),
 });
 
 type envType = z.infer<typeof envSchema>;
