@@ -15,27 +15,22 @@ import {
   Logger,
   OnModuleInit,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import {
   GoogleAiModelResponse,
   Model,
 } from './interfaces/google-ai-models-response.interface';
+import { env } from './config/env.schema';
 
 @Injectable()
 export class AppService implements OnModuleInit {
   private readonly logger = new Logger(AppService.name);
-  private readonly apiKey = <string>this.configService.get('GOOGLE_AI_API_KEY');
-  private readonly googleModelsApi = <string>(
-    this.configService.get('GOOGLE_AI_MODELS_API')
-  );
-  private readonly model = <string>this.configService.get('MODEL');
+  private readonly apiKey = env.GOOGLE_AI_API_KEY;
+  private readonly googleModelsApi = env.GOOGLE_AI_MODELS_API;
+  private readonly model = env.MODEL;
   private ai: GoogleGenAI;
 
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly httpService: HttpService,
-  ) {}
+  constructor(private readonly httpService: HttpService) {}
 
   onModuleInit() {
     this.ai = new GoogleGenAI({
