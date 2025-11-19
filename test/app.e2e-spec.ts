@@ -122,7 +122,7 @@ describe('Google Gemini API Test (e2e)', () => {
         .expect(400)
         .then((res) => {
           expect(res.body.message).toBeDefined();
-          // Array contente gli errori di validazione (es. "prompt must be a string")
+          // Array contenente gli errori di validazione (es. "prompt must be a string")
           expect(Array.isArray(res.body.message)).toBe(true);
         });
     });
@@ -134,7 +134,7 @@ describe('Google Gemini API Test (e2e)', () => {
         .expect(400)
         .then((res) => {
           expect(res.body.message).toBeDefined();
-          // Array contente gli errori di validazione (es. "prompt must be longer than or equal to 2 characters")
+          // Array contenente gli errori di validazione (es. "prompt must be longer than or equal to 2 characters")
           expect(Array.isArray(res.body.message)).toBe(true);
         });
     });
@@ -146,7 +146,7 @@ describe('Google Gemini API Test (e2e)', () => {
         .expect(400)
         .then((res) => {
           expect(res.body.message).toBeDefined();
-          // Array contente gli errori di validazione (es. "prompt must be longer than or equal to 2 characters")
+          // Array contenente gli errori di validazione (es. "prompt must be longer than or equal to 2 characters")
           expect(Array.isArray(res.body.message)).toBe(true);
         });
     });
@@ -158,7 +158,7 @@ describe('Google Gemini API Test (e2e)', () => {
         .expect(400)
         .then((res) => {
           expect(res.body.message).toBeDefined();
-          // Array contente gli errori di validazione (es. "prompt must be a string")
+          // Array contenente gli errori di validazione (es. "prompt must be a string")
           expect(Array.isArray(res.body.message)).toBe(true);
         });
     });
@@ -214,7 +214,7 @@ describe('Google Gemini API Test (e2e)', () => {
         .expect(400)
         .then((res) => {
           expect(res.body.message).toBeDefined();
-          // Array contente gli errori di validazione (es. "prompt must be a string")
+          // Array contenente gli errori di validazione (es. "prompt must be a string")
           expect(Array.isArray(res.body.message)).toBe(true);
         });
     });
@@ -228,7 +228,7 @@ describe('Google Gemini API Test (e2e)', () => {
         .expect(400)
         .then((res) => {
           expect(res.body.message).toBeDefined();
-          // Array contente gli errori di validazione (es. "prompt must be longer than or equal to 2 characters")
+          // Array contenente gli errori di validazione (es. "prompt must be longer than or equal to 2 characters")
           expect(Array.isArray(res.body.message)).toBe(true);
         });
     });
@@ -242,7 +242,7 @@ describe('Google Gemini API Test (e2e)', () => {
         .expect(400)
         .then((res) => {
           expect(res.body.message).toBeDefined();
-          // Array contente gli errori di validazione (es. "prompt must be longer than or equal to 2 characters")
+          // Array contenente gli errori di validazione (es. "prompt must be longer than or equal to 2 characters")
           expect(Array.isArray(res.body.message)).toBe(true);
         });
     });
