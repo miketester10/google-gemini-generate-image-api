@@ -5,6 +5,7 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { Server } from 'http';
 import { Model } from '../src/interfaces/google-ai-models-response.interface';
+// import { AppService } from 'src/app.service';
 
 describe('Google Gemini API Test (e2e)', () => {
   let app: INestApplication;
@@ -13,7 +14,27 @@ describe('Google Gemini API Test (e2e)', () => {
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      /**
+       * Mock del servizio AppService per isolare i test (serve per non chiamare l'API reale di Gemini)
+       */
+      // .overrideProvider(AppService)
+      // .useValue({
+      //   getGoogleAiModels: jest.fn().mockResolvedValue([
+      //     {
+      //       name: 'models/test-model',
+      //       version: '1.0',
+      //       displayName: 'Test Model',
+      //       description: 'A model for testing purposes',
+      //       inputTokenLimit: 1024,
+      //       outputTokenLimit: 2048,
+      //       supportedGenerationMethods: ['text', 'image'],
+      //     },
+      //   ]),
+      //   generateImage: jest.fn().mockResolvedValue(createTestImagePngBuffer()),
+      //   editImage: jest.fn().mockResolvedValue(createTestImagePngBuffer()),
+      // })
+      .compile();
 
     app = moduleFixture.createNestApplication();
     app.useGlobalPipes(
@@ -113,7 +134,7 @@ describe('Google Gemini API Test (e2e)', () => {
             throw new Error(`Unexpected status code: ${res.status}`);
           }
         });
-    });
+    }, 20000); // Timeout di 20 secondi
 
     it('Dovrebbe rifiutare una richiesta senza prompt', async () => {
       await request(server)
@@ -192,7 +213,7 @@ describe('Google Gemini API Test (e2e)', () => {
             throw new Error(`Unexpected status code: ${res.status}`);
           }
         });
-    });
+    }, 20000); // Timeout di 20 secondi
 
     it('Dovrebbe rifiutare una richiesta senza file', async () => {
       const prompt = 'Make it brighter';
@@ -290,7 +311,7 @@ describe('Google Gemini API Test (e2e)', () => {
             throw new Error(`Unexpected status code: ${res.status}`);
           }
         });
-    });
+    }, 20000); // Timeout di 20 secondi
 
     it('Dovrebbe gestire un errore 400 per file JPEG invalido', async () => {
       const prompt = 'Make it brighter';
@@ -335,7 +356,7 @@ describe('Google Gemini API Test (e2e)', () => {
             throw new Error(`Unexpected status code: ${res.status}`);
           }
         });
-    });
+    }, 20000); // Timeout di 20 secondi
 
     it('Dovrebbe gestire un errore 400 per file WebP invalido', async () => {
       const prompt = 'Make it brighter';
