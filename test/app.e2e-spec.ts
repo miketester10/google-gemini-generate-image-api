@@ -6,6 +6,12 @@ import { AppModule } from '../src/app.module';
 import { Server } from 'http';
 import { Model } from '../src/interfaces/google-ai-models-response.interface';
 // import { AppService } from 'src/app.service';
+import {
+  // appServiceMock,
+  createTestImagePngBuffer,
+  createTestImageJpegBuffer,
+  createTestImageWebpBuffer,
+} from './helper';
 
 describe('Google Gemini API Test (e2e)', () => {
   let app: INestApplication;
@@ -16,24 +22,10 @@ describe('Google Gemini API Test (e2e)', () => {
       imports: [AppModule],
     })
       /**
-       * Mock del servizio AppService per isolare i test (serve per non chiamare l'API reale di Gemini)
+       * Override di AppService con mock, per isolare i test (serve per non chiamare l'API reale di Gemini)
        */
       // .overrideProvider(AppService)
-      // .useValue({
-      //   getGoogleAiModels: jest.fn().mockResolvedValue([
-      //     {
-      //       name: 'models/test-model',
-      //       version: '1.0',
-      //       displayName: 'Test Model',
-      //       description: 'A model for testing purposes',
-      //       inputTokenLimit: 1024,
-      //       outputTokenLimit: 2048,
-      //       supportedGenerationMethods: ['text', 'image'],
-      //     },
-      //   ]),
-      //   generateImage: jest.fn().mockResolvedValue(createTestImagePngBuffer()),
-      //   editImage: jest.fn().mockResolvedValue(createTestImagePngBuffer()),
-      // })
+      // .useValue(appServiceMock)
       .compile();
 
     app = moduleFixture.createNestApplication();
@@ -52,29 +44,6 @@ describe('Google Gemini API Test (e2e)', () => {
     // Chiude l'applicazione NestJS dopo i test
     await app.close();
   });
-
-  // Helper functions per creare buffer di immagini di test
-  // Immagine PNG minimale valida (1x1 pixel)
-  const createTestImagePngBuffer = (): Buffer => {
-    return Buffer.from(
-      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
-      'base64',
-    );
-  };
-  // Immagine JPEG minimale valida (1x1 pixel)
-  const createTestImageJpegBuffer = (): Buffer => {
-    return Buffer.from(
-      '/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwA/8A',
-      'base64',
-    );
-  };
-  // Immagine WebP minimale valida (1x1 pixel)
-  const createTestImageWebpBuffer = (): Buffer => {
-    return Buffer.from(
-      'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',
-      'base64',
-    );
-  };
 
   describe('GET /models', () => {
     it('Dovrebbe restituire un array di modelli Google AI', async () => {
